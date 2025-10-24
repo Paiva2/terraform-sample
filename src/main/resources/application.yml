@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: terraform
+
+aws:
+  sqs:
+    queue: "tf-queue.fifo"
+  sns:
+    topic: "tf-sns.fifo"
