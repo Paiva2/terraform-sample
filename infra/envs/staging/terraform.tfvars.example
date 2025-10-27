@@ -1,3 +1,5 @@
-aws_region =
-aws_access_key_id =
-aws_secret_access_key =
+aws_region=
+aws_access_key_id=
+aws_secret_access_key=
+key_pair_path=
+app_port=

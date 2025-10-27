@@ -14,3 +14,15 @@ variable "aws_secret_access_key" {
   description = "AWS Secret Access Key"
   sensitive   = true
 }
+
+variable "key_pair_path" {
+  type        = string
+  description = "Key pair to use on SSH"
+  sensitive   = true
+}
+
+variable "app_port" {
+  type        = number
+  description = "HTTP port used by application"
+  sensitive   = false
+}

@@ -20,7 +20,7 @@ public class TerraformApplication {
         SpringApplication.run(TerraformApplication.class, args);
     }
 
-    @GetMapping("/health")
+    @GetMapping("/status-check")
     public ResponseEntity<String> health() {
         return  new ResponseEntity<>("OK", HttpStatus.OK);
     }

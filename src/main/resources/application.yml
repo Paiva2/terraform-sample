@@ -1,9 +1,20 @@
 spring:
   application:
     name: terraform
+  cloud:
+    aws:
+      region:
+        static: us-east-2
 
 aws:
   sqs:
-    queue: "tf-queue.fifo"
+    queue: "application-queue-paiva2-java-app.fifo"
   sns:
     topic: "tf-sns.fifo"
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error
