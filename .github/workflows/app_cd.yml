@@ -1,7 +1,6 @@
 name: Application CD (Docker)
 
 on:
-  workflow_dispatch:
   workflow_run:
     workflows: ["Application Build"]
     types:
@@ -51,3 +50,27 @@ jobs:
           subject-name: index.docker.io/${{ secrets.DOCKER_NAMESPACE }}/${{ secrets.DOCKER_REPOSITORY }}
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install Session Manager Plugin
+        run: |
+          curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
+          sudo dpkg -i session-manager-plugin.deb
+
+      - name: Run command to update Swarm image on EC2 instance
+        run: |
+          COMMAND_ID=$(aws ssm send-command \
+            --instance-ids ${{ secrets.AWS_SWARM_INSTANCE_ID }} \
+            --document-name "AWS-RunShellScript" \
+            --parameters 'commands=[
+              "sudo docker pull ${{ secrets.DOCKER_APP_LABEL }}:latest",
+              "sudo docker service update --image ${{ secrets.DOCKER_APP_LABEL }}:latest java-app' \
+            --comment "Deploying to EC2 Swarm Manager" \
+            --query "Command.CommandId" \
+            --output text)
