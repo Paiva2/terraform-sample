@@ -33,7 +33,7 @@ variable "application_docker_name" {
 
 variable "application_version" {
   description = "Version of application to use while pulling from dockerhub"
-  default = "2.0"
+  default = "latest"
   type = string
 }
 

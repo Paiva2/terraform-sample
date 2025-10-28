@@ -32,6 +32,12 @@ resource "aws_security_group" "alb_sg" {
   }
 }
 
+# SSM configs to EC2 manager
+resource "aws_iam_role_policy_attachment" "ssm_attach" {
+  role       = aws_iam_role.swarm_ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
 # Instances Key pair
 resource "aws_key_pair" "key_pair_ec2" {
   key_name   = "ec2-key"

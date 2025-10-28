@@ -22,7 +22,7 @@ public class TerraformApplication {
 
     @GetMapping("/status-check")
     public ResponseEntity<String> health() {
-        return  new ResponseEntity<>("OK - Change", HttpStatus.OK);
+        return  new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
     @PostMapping("/pub")

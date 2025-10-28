@@ -1,4 +1,4 @@
-name: Application CD (Docker)
+name: Application CD (Docker and AWS)
 
 on:
   workflow_run:
@@ -7,7 +7,7 @@ on:
       - completed
 
 jobs:
-  push_to_registry:
+  push_to_registry_and_deploy_aws:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     permissions:

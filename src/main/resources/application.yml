@@ -5,6 +5,10 @@ spring:
     aws:
       region:
         static: us-east-2
+      sqs:
+        listener:
+          auto-create-queue: false
+        queue-not-found-strategy: fail
 
 aws:
   sqs:
