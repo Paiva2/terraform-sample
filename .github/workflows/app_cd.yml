@@ -17,13 +17,19 @@ jobs:
       id-token: write
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v5
-
       - name: Download app JAR artifact
         uses: actions/download-artifact@v4
         with:
           name: app-jar
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Move JAR into target folder
+        run: |
+          mkdir -p target
+          mv app-jar/*.jar target/
+
+      - name: Check out the repo
+        uses: actions/checkout@v5
 
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
