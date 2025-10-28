@@ -2,11 +2,14 @@ name: Application CD (Docker)
 
 on:
   workflow_run:
+    branch: master
     workflows: ["Application Build"]
     types:
       - completed
 
 jobs:
+  compile:
+    uses: ./.github/workflows/app_ci.yml
   push_to_registry:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
@@ -17,20 +20,20 @@ jobs:
       id-token: write
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: Check out the repo
+        uses: actions/checkout@v5
+
       - name: Download app JAR artifact
         uses: actions/download-artifact@v4
         with:
-          name: app-java-jar
+          name: app-java
           path: target
 
       - name: Install unzip
         run: sudo apt-get update && sudo apt-get install -y unzip
 
       - name: Unzip the artifact
-        run: unzip target/my_archive.zip -d target
-
-      - name: Check out the repo
-        uses: actions/checkout@v5
+        run: unzip target/app-java.zip -d target
 
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a

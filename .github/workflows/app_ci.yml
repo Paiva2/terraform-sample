@@ -27,7 +27,8 @@ jobs:
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
-
         with:
-          name: app-java-jar
+          name: app-java
           path: "target/*.jar"
+          if-no-files-found: error
+          retention-days: 1
