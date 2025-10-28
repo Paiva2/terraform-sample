@@ -19,9 +19,6 @@ jobs:
     steps:
       - name: Download app JAR artifact
         uses: actions/download-artifact@v4
-        with:
-          name: app-jar
-          run-id: ${{ github.event.workflow_run.id }}
 
       - name: Move JAR into target folder
         run: |
