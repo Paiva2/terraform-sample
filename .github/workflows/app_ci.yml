@@ -30,4 +30,4 @@ jobs:
 
         with:
           name: app-jar
-          path: "${{ github.workspace }}/target/*.jar"
+          path: "./target/*.jar"
