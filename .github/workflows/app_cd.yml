@@ -66,11 +66,10 @@ jobs:
       - name: Run command to update Swarm image on EC2 instance
         run: |
           COMMAND_ID=$(aws ssm send-command \
-            --instance-ids ${{ secrets.AWS_SWARM_INSTANCE_ID }} \
+            --instance-ids "${{ secrets.AWS_SWARM_INSTANCE_ID }}" \
             --document-name "AWS-RunShellScript" \
-            --parameters 'commands=[
-              "sudo docker pull ${{ secrets.DOCKER_APP_LABEL }}:latest",
-              "sudo docker service update --image ${{ secrets.DOCKER_APP_LABEL }}:latest java-app' \
+            --parameters '{"commands":["sudo docker pull ${{ secrets.DOCKER_APP_LABEL }}:latest","sudo docker service update --image ${{ secrets.DOCKER_APP_LABEL }}:latest java-app"]}' \
             --comment "Deploying to EC2 Swarm Manager" \
             --query "Command.CommandId" \
             --output text)
+          echo "Command ID: $COMMAND_ID"
