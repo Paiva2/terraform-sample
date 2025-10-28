@@ -2,8 +2,7 @@ name: Application CD (Docker)
 
 on:
   workflow_run:
-    workflows:
-      - "Application Build"
+    workflows: [Application Build]
     types:
       - completed
 
@@ -16,6 +15,7 @@ jobs:
       contents: read
       attestations: write
       id-token: write
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v5
