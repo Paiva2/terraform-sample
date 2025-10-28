@@ -2,7 +2,7 @@ name: Application CD (Docker)
 
 on:
   workflow_run:
-    workflows: [Application Build]
+    workflows: ["Application Build"]
     types:
       - completed
 
