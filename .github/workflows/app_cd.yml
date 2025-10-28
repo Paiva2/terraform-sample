@@ -42,7 +42,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: 3.0
+          tags: ${{ secrets.DOCKER_APP_LABEL }}:3.0
           labels: ${{ secrets.DOCKER_APP_LABEL }}
 
       - name: Generate artifact attestation
