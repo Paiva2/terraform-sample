@@ -1,8 +1,8 @@
 name: Application CD (Docker)
 
 on:
+  workflow_dispatch:
   workflow_run:
-    branch: master
     workflows: ["Application Build"]
     types:
       - completed
